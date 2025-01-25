@@ -23,7 +23,6 @@ description: "Manejo de estudios clinicos"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://localhost:4001"  # URL completa para el sitio en local o en producción
 url_local: "http://0.0.0.0:4001"  # Dirección para el servidor de desarrollo
-twitter_username: jekyllrb
 github_username:  zamora16
 
 # Dirección del servidor y puerto
@@ -34,9 +33,9 @@ http_prefix: "/"
 markdown: kramdown
 
 # Build settings
-theme: minima
-plugins:
-  - jekyll-feed
+remote_theme: chrisrhymes/bulma-clean-theme@v0.14.0
+#plugins:
+#  - jekyll-feed
 
 
 # Exclude from processing.
