@@ -25,11 +25,6 @@ url: "https://zamora16.github.io"
 url_local: "http://localhost:4001"
 github_username:  zamora16
 
-# Dirección del servidor y puerto
-host: "0.0.0.0"  # Esto permite que sea accesible en cualquier IP dentro de la red local
-port: 4001       # Puerto donde el servidor estará disponible
-http_prefix: "/"
-
 markdown: kramdown
 
 # Build settings
