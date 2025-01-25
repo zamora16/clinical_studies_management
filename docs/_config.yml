@@ -20,9 +20,9 @@
 
 title: "Clinical Studies Management"
 description: "Manejo de estudios clinicos"
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://localhost:4001"  # URL completa para el sitio en local o en producción
-url_local: "http://0.0.0.0:4001"  # Dirección para el servidor de desarrollo
+baseurl: "/clinical_studies_management" 
+url: "https://zamora16.github.io"  
+url_local: "http://localhost:4001"
 github_username:  zamora16
 
 # Dirección del servidor y puerto
