@@ -58,7 +58,7 @@ El sistema permitirá crear una plantilla con toda la configuración necesaria p
 ## 4. Mapa del módulo
 El módulo permitirá gestionar plantillas, profesionales y participantes. La asignación de profesionales a una determinada plantilla se realizará de manera automática considerando datos del estudio y del profesional. El apartado de profesionales será de consulta, para comprobar el estado de cada uno de ellos y manejar cargas de trabajo. Por último, el apartado participantes permitirá crearlos con diferentes datos que también serán utilizados para la correcta asignación de profesionales y programación de sesiones.
 
-![Mapa del módulo](assets/images/imagen.png)
+![Mapa del módulo](assets/images/mapaModulo.png)
 
 ## 5. Dependencias
 - `base`
