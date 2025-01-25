@@ -72,7 +72,7 @@ El módulo permitirá gestionar plantillas, profesionales y participantes. La as
 El módulo requerirá el desarrollo de las siguientes pantallas para permitir la visualización y edición de plantillas. Además, se emplearán módulos de Odoo ya existentes para las vistas de calendario y de información particular de profesionales y participantes.
 
 ### 1. Templates Dashboard (Home)
-![Templates Dashboard](assets/images/templatesDashboard.png)
+![Templates Dashboard](docs/assets/images/templatesDashboard.png)
 
 ### 2. New Study Template
 ![New Study Template](assets/images/new-study-template.png)
