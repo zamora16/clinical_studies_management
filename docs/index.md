@@ -176,5 +176,3 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
     - Gestión de participantes
         - Información de contacto
         - Preferencias horarias
-
-> Written with [StackEdit](https://stackedit.io/).
