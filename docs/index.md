@@ -1,6 +1,10 @@
 ---
+title: Odoodock
+subtitle: Entorno de desarrollo Odoo para Docker
 layout: page
----﻿
+show_sidebar: false
+hero_height: is-fullwidth
+---
 
 # Clinical Studies Management
 
@@ -71,19 +75,19 @@ El módulo permitirá gestionar plantillas, profesionales y participantes. La as
 ## 6. Wireframes
 El módulo requerirá el desarrollo de las siguientes pantallas para permitir la visualización y edición de plantillas. Además, se emplearán módulos de Odoo ya existentes para las vistas de calendario y de información particular de profesionales y participantes.
 
-### 1. Templates Dashboard (Home)
+### - Templates Dashboard (Home)
 ![Templates Dashboard](/assets/images/templatesDashboard.png)
 
-### 2. New Study Template
+### - New Study Template
 ![New Study Template](assets/images/new-study-template.png)
 
-### 3. Participants Dashboard
+### - Participants Dashboard
 ![Participants Dashboard](assets/images/participants-dashboard.png)
 
-### 4. New Participant
+### - New Participant
 ![New Participant](assets/images/new-participant.png)
 
-### 5. Assigned Professionals
+### - Assigned Professionals
 ![Assigned Professionals](assets/images/assigned-professionals.png)
 
 ## 7. Control de accesos
