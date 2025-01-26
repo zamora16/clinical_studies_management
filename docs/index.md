@@ -1,6 +1,5 @@
 ---
-title: Odoodock
-subtitle: Entorno de desarrollo Odoo para Docker
+title: Clinical Studies Managemeent
 layout: page
 show_sidebar: false
 hero_height: is-fullwidth
