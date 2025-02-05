@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Odoo attach debug",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            }
+        },
+        {
+            "name": "Python: Odoo dev mode",
+            "type": "python",
+            "request": "launch",
+            "program": "/usr/bin/odoo",
+            "args": ["--dev=all"],
+            "console": "integratedTerminal"
+        }
+    ]
+}
