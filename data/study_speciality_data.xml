@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Especialidades básicas originales -->
+        <record id="speciality_depression" model="study.speciality">
+            <field name="name">Depresión</field>
+            <field name="description">Especialista en tratamiento de depresión y trastornos del estado de ánimo</field>
+        </record>
+        
+        <record id="speciality_anxiety" model="study.speciality">
+            <field name="name">Ansiedad</field>
+            <field name="description">Especialista en trastornos de ansiedad y fobias</field>
+        </record>
+        
+        <record id="speciality_addiction" model="study.speciality">
+            <field name="name">Adicciones</field>
+            <field name="description">Especialista en tratamiento de adicciones y dependencias</field>
+        </record>
+        
+        <record id="speciality_ptsd" model="study.speciality">
+            <field name="name">Trauma y TEPT</field>
+            <field name="description">Especialista en trauma y trastorno de estrés postraumático</field>
+        </record>
+        
+        <record id="speciality_eating" model="study.speciality">
+            <field name="name">Trastornos Alimentarios</field>
+            <field name="description">Especialista en trastornos de la conducta alimentaria</field>
+        </record>
+        
+        <record id="speciality_personality" model="study.speciality">
+            <field name="name">Trastornos de Personalidad</field>
+            <field name="description">Especialista en trastornos de personalidad</field>
+        </record>
+
+        <!-- Especialidades adicionales -->
+        <record id="speciality_ocd" model="study.speciality">
+            <field name="name">TOC</field>
+            <field name="description">Trastorno obsesivo-compulsivo y trastornos relacionados</field>
+        </record>
+
+        <record id="speciality_bipolar" model="study.speciality">
+            <field name="name">Trastorno Bipolar</field>
+            <field name="description">Especialista en trastorno bipolar tipos I y II</field>
+        </record>
+
+        <record id="speciality_schizophrenia" model="study.speciality">
+            <field name="name">Esquizofrenia</field>
+            <field name="description">Trastornos del espectro de la esquizofrenia</field>
+        </record>
+
+        <record id="speciality_child" model="study.speciality">
+            <field name="name">Psicología Infantil</field>
+            <field name="description">Especialista en trastornos de la infancia y adolescencia</field>
+        </record>
+
+        <record id="speciality_geriatric" model="study.speciality">
+            <field name="name">Psicogeriatría</field>
+            <field name="description">Especialista en trastornos mentales en adultos mayores</field>
+        </record>
+
+        <record id="speciality_family" model="study.speciality">
+            <field name="name">Terapia Familiar</field>
+            <field name="description">Especialista en intervención sistémica familiar</field>
+        </record>
+
+        <record id="speciality_psychosomatic" model="study.speciality">
+            <field name="name">Trastornos Psicosomáticos</field>
+            <field name="description">Especialista en la relación mente-cuerpo</field>
+        </record>
+
+        <record id="speciality_grief" model="study.speciality">
+            <field name="name">Duelo</field>
+            <field name="description">Especialista en procesos de duelo y pérdida</field>
+        </record>
+
+        <record id="speciality_sexual" model="study.speciality">
+            <field name="name">Sexología</field>
+            <field name="description">Especialista en trastornos y disfunciones sexuales</field>
+        </record>
+    </data>
+</odoo>

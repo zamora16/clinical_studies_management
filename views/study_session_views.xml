@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_study_session_form" model="ir.ui.view">
+        <field name="name">study.session.form</field>
+        <field name="model">study.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirmar" 
+                            states="scheduled" class="oe_highlight"/>
+                    <button name="action_complete" type="object" string="Completar" 
+                            states="confirmed" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancelar" 
+                            states="scheduled,confirmed"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template_id"/>
+                            <field name="participant_id"/>
+                            <field name="professional_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="time_start" widget="float_time"/>
+                            <field name="time_end" widget="float_time"/>
+                            <field name="duration" widget="float_time"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids"/>
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Calendar View -->
+    <record id="view_study_session_calendar" model="ir.ui.view">
+        <field name="name">study.session.calendar</field>
+        <field name="model">study.session</field>
+        <field name="arch" type="xml">
+            <calendar string="Sesiones" date_start="date" date_delay="duration" 
+                     color="professional_id" quick_add="False" mode="week">
+                <field name="participant_id"/>
+                <field name="professional_id"/>
+                <field name="template_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_session_tree" model="ir.ui.view">
+        <field name="name">study.session.tree</field>
+        <field name="model">study.session</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="time_start" widget="float_time"/>
+                <field name="participant_id"/>
+                <field name="professional_id"/>
+                <field name="template_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_session_search" model="ir.ui.view">
+        <field name="name">study.session.search</field>
+        <field name="model">study.session</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="participant_id"/>
+                <field name="professional_id"/>
+                <field name="template_id"/>
+                <separator/>
+                <filter string="Hoy" name="today" 
+                        domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Esta semana" name="this_week" 
+                        domain="[('date', '>=', (context_today() - relativedelta(days=context_today().weekday())).strftime('%Y-%m-%d')),
+                                ('date', '&lt;=', (context_today() + relativedelta(days=6-context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Programadas" name="scheduled" domain="[('state', '=', 'scheduled')]"/>
+                <filter string="Confirmadas" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Completadas" name="completed" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Profesional" name="professional" context="{'group_by': 'professional_id'}"/>
+                    <filter string="Participante" name="participant" context="{'group_by': 'participant_id'}"/>
+                    <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Fecha" name="date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_study_session" model="ir.actions.act_window">
+        <field name="name">Sesiones</field>
+        <field name="res_model">study.session</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay sesiones programadas
+            </p>
+        </field>
+    </record>
+</odoo>

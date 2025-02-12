@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_study_speciality_form" model="ir.ui.view">
+        <field name="name">study.speciality.form</field>
+        <field name="model">study.speciality</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_speciality_tree" model="ir.ui.view">
+        <field name="name">study.speciality.tree</field>
+        <field name="model">study.speciality</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_speciality_search" model="ir.ui.view">
+        <field name="name">study.speciality.search</field>
+        <field name="model">study.speciality</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Especialidades">
+                <field name="name" string="Nombre"/>
+                <field name="description" string="Descripción"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Nombre" name="group_by_name" 
+                            context="{'group_by': 'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_study_speciality" model="ir.actions.act_window">
+        <field name="name">Especialidades</field>
+        <field name="res_model">study.speciality</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea la primera especialidad
+            </p>
+        </field>
+    </record>
+</odoo>

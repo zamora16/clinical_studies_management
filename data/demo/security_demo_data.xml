@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Usuario Gestor Principal -->
+        <record id="demo_user_manager" model="res.users">
+            <field name="name">Gestor Demo</field>
+            <field name="login">gestor_demo</field>
+            <field name="password">gestor_demo</field>
+            <field name="groups_id" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('clinical_studies_management.group_study_professional_principal'))
+            ]"/>
+        </record>
+
+        <!-- Usuario Profesional Asociado -->
+        <record id="demo_user_professional" model="res.users">
+            <field name="name">Juan Torres</field>
+            <field name="login">prof_demo</field>
+            <field name="password">prof_demo</field>
+            <field name="groups_id" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('clinical_studies_management.group_study_professional_associate'))
+            ]"/>
+        </record>
+    </data>
+</odoo>

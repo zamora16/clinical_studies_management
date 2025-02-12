@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_study_professional_form" model="ir.ui.view">
+        <field name="name">study.professional.form</field>
+        <field name="model">study.professional</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="years_experience"/>
+                            <field name="speciality_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="available_days" widget="many2many_tags"/>
+                            <field name="preferred_schedule"/>
+                            <field name="participant_count"/>
+                            <field name="study_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Participantes Activos">
+                            <field name="active_participant_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="template_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids"/>
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_professional_tree" model="ir.ui.view">
+        <field name="name">study.professional.tree</field>
+        <field name="model">study.professional</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="speciality_ids" widget="many2many_tags"/>
+                <field name="years_experience"/>
+                <field name="participant_count"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_professional_search" model="ir.ui.view">
+        <field name="name">study.professional.search</field>
+        <field name="model">study.professional</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="speciality_ids"/>
+                <filter string="Disponibles" name="available" domain="[('state', '=', 'available')]"/>
+                <filter string="De baja" name="on_leave" domain="[('state', '=', 'on_leave')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Horario" name="schedule" context="{'group_by': 'preferred_schedule'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_study_professional" model="ir.actions.act_window">
+        <field name="name">Profesionales</field>
+        <field name="res_model">study.professional</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registra el primer profesional
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,35 +1,50 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "clinical_studies_management",
-
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
+    'name': 'Clinical Studies Management',
+    'version': '1.0',
+    'summary': 'Sistema de gestión de estudios clínicos',
     'description': """
-        Long description of module's purpose
+        Sistema automatizado para la gestión integral de estudios clínicos en salud mental.
+        Características principales:
+        - Gestión de plantillas de estudios
+        - Asignación inteligente de profesionales y participantes
+        - Generación automática de calendarios de sesiones
     """,
-
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
-    'depends': ['base'],
-
-    # always loaded
+    'category': 'Healthcare',
+    'author': 'Ángel Zamora Martínez',
+    'website': 'https://zamora16.github.io/clinical_studies_management',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'calendar', 'hr'],
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        # Security
+        'security/clinical_security.xml',
+        'security/record_rules.xml',
+        'security/ir.model.access.csv',
+        
+        # Datos (estáticos)
+        'data/study_speciality_data.xml',
+        'data/available_days_data.xml',
+        'data/study_session_data.xml',
+
+        # Acciones
+        'actions/actions.xml',
+        
+        # Vistas
+        'views/study_session_type_views.xml',
+        'views/study_template_views.xml',
+        'views/study_speciality_views.xml', 
+        'views/study_professional_views.xml',
+        'views/study_participant_views.xml',
+        'views/study_session_views.xml',
+        'views/study_professional_assignment_views.xml',
+        'views/assign_template_wizard_views.xml',
+        'views/menu_views.xml',
+
+        # Datos demo
+        'data/demo/security_demo_data.xml',
+        'data/demo/initial_data.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'demo': [],
+    'application': True,
+    'installable': True,
 }

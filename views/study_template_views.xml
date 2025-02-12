@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_study_template" model="ir.actions.act_window">
+        <field name="name">Plantillas de Estudio</field>
+        <field name="res_model">study.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera plantilla de estudio
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_template_tree" model="ir.ui.view">
+        <field name="name">study.template.tree</field>
+        <field name="model">study.template</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" 
+                  decoration-success="state == 'active'">
+                <field name="name"/>
+                <field name="participant_count"/>
+                <field name="professional_count"/>
+                <field name="sessions_per_week"/>
+                <field name="total_sessions"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_study_template_form" model="ir.ui.view">
+        <field name="name">study.template.form</field>
+        <field name="model">study.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign_professionals" 
+                            string="Asignar Profesionales" 
+                            type="object" 
+                            class="oe_highlight" 
+                            states="draft"/>
+                    <button name="action_generate_sessions"
+                            string="Generar Sesiones"
+                            type="object"
+                            class="oe_highlight"
+                            states="draft"/>
+                    <button name="action_activate" 
+                            string="Activar" 
+                            type="object" 
+                            class="oe_highlight" 
+                            states="draft"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre del estudio"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Configuración básica">
+                            <field name="participant_count" string="Número mínimo de participantes"/>
+                            <field name="professional_count" string="Número mínimo de profesionales"/>
+                            <field name="sessions_per_week" string="Sesiones por semana"/>
+                            <field name="estimated_duration_days" string="Duración estimada (días)" readonly="1"/>
+                            <field name="total_sessions" string="Total de sesiones"/>
+                        </group>
+                        <group string="Requisitos de personal">
+                            <field name="required_specialities_ids" widget="many2many_tags"/>
+                            <field name="required_experience_years"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Configuración de Sesiones" name="session_types">
+                            <field  name="session_type_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field string="Sesión" name="session_type_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Profesionales asignados">
+                            <field name="assignment_ids">
+                                <tree>
+                                    <field name="professional_id"/>
+                                    <field name="score"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Participantes">
+                            <field name="participant_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="professional_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_template_search" model="ir.ui.view">
+        <field name="name">study.template.search</field>
+        <field name="model">study.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <separator/>
+                <filter string="Borrador" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Activo" name="active" domain="[('state', '=', 'active')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

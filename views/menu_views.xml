@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_clinical_studies_root" 
+              name="Estudios Clínicos" 
+              web_icon="clinical_studies_management,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Menú principal -->
+    <menuitem id="menu_study_template"
+              name="Plantillas de Estudio"
+              parent="menu_clinical_studies_root"
+              action="action_study_template"
+              sequence="10"/>
+    
+    <!-- Professional Menu -->
+    <menuitem id="menu_study_professional"
+              name="Profesionales"
+              parent="menu_clinical_studies_root"
+              action="action_study_professional"
+              sequence="20"/>
+
+    <menuitem id="menu_study_participant"
+              name="Participantes"
+              parent="menu_clinical_studies_root"
+              action="action_study_participant"
+              sequence="30"/>
+
+    <menuitem id="menu_study_session"
+              name="Calendario de Sesiones"
+              parent="menu_clinical_studies_root"
+              action="action_study_session"
+              sequence="40"/>
+
+    <!-- Resources Management Submenu -->
+    <menuitem id="menu_resources_management"
+              name="Recursos"
+              parent="menu_clinical_studies_root"
+              sequence="50"/>
+
+    <menuitem id="menu_study_session_type"
+              name="Tipos de Sesión"
+              parent="menu_resources_management"
+              action="action_study_session_type"
+              sequence="10"/>
+
+    <menuitem id="menu_study_speciality"
+              name="Especialidades"
+              parent="menu_resources_management"
+              action="action_study_speciality"
+              sequence="20"/>
+</odoo>
