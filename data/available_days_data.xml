@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="available_day_monday" model="available.days">
+            <field name="name">Lunes</field>
+            <field name="code">1</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="available_day_tuesday" model="available.days">
+            <field name="name">Martes</field>
+            <field name="code">2</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="available_day_wednesday" model="available.days">
+            <field name="name">Miércoles</field>
+            <field name="code">3</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="available_day_thursday" model="available.days">
+            <field name="name">Jueves</field>
+            <field name="code">4</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="available_day_friday" model="available.days">
+            <field name="name">Viernes</field>
+            <field name="code">5</field>
+            <field name="sequence">5</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,1945 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+
+        <!-- Usuario Profesional Asociado -->
+        <record id="demo_user_professional" model="res.users">
+            <field name="name">Juan Torres</field>
+            <field name="login">prof_demo</field>
+            <field name="password">prof_demo</field>
+            <field name="groups_id" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('clinical_studies_management.group_study_professional_associate'))
+            ]"/>
+        </record>
+
+        <!-- Usuario Gestor Principal -->
+        <record id="demo_user_manager" model="res.users">
+            <field name="name">Demo Gestor</field>
+            <field name="login">manager_demo</field>
+            <field name="password">manager_demo</field>
+            <field name="groups_id" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('clinical_studies_management.group_study_professional_principal'))
+            ]"/>
+        </record>
+
+        <record id="demo_template_1" model="study.template">
+            <field name="name">Estudio de Depresión y Ansiedad</field>
+            <field name="participant_count">50</field>
+            <field name="professional_count">10</field>
+            <field name="sessions_per_week">2</field>
+            <field name="required_experience_years">5</field>
+            <field name="required_specialities_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_depression'), ref('clinical_studies_management.speciality_anxiety'), ref('clinical_studies_management.speciality_ptsd')])]"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_template_session_type_1_1" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_1"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_initial"/>
+            <field name="quantity">1</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="demo_template_session_type_1_2" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_1"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_therapy"/>
+            <field name="quantity">14</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="demo_template_session_type_1_3" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_1"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_followup"/>
+            <field name="quantity">1</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="demo_template_2" model="study.template">
+            <field name="name">Programa de Adicciones</field>
+            <field name="participant_count">40</field>
+            <field name="professional_count">8</field>
+            <field name="sessions_per_week">3</field>
+            <field name="required_experience_years">7</field>
+            <field name="required_specialities_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_family')])]"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_template_session_type_2_1" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_2"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_initial"/>
+            <field name="quantity">1</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="demo_template_session_type_2_2" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_2"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_therapy"/>
+            <field name="quantity">22</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="demo_template_session_type_2_3" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_2"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_followup"/>
+            <field name="quantity">1</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="demo_template_3" model="study.template">
+            <field name="name">Terapia de Trauma</field>
+            <field name="participant_count">30</field>
+            <field name="professional_count">6</field>
+            <field name="sessions_per_week">1</field>
+            <field name="required_experience_years">3</field>
+            <field name="required_specialities_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_ptsd'), ref('clinical_studies_management.speciality_grief'), ref('clinical_studies_management.speciality_psychosomatic')])]"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_template_session_type_3_1" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_3"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_initial"/>
+            <field name="quantity">1</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="demo_template_session_type_3_2" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_3"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_therapy"/>
+            <field name="quantity">10</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="demo_template_session_type_3_3" model="study.template.session.type">
+            <field name="template_id" ref="demo_template_3"/>
+            <field name="session_type_id" ref="clinical_studies_management.session_type_followup"/>
+            <field name="quantity">1</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="demo_professional_1" model="study.professional">
+            <field name="name">Pedro Morales</field>
+            <field name="email">pedro.morales@example.com</field>
+            <field name="phone">+34 651291916</field>
+            <field name="years_experience">3</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_depression'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_family'), ref('clinical_studies_management.speciality_child'), ref('clinical_studies_management.speciality_eating')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+            <field name="user_id" ref="clinical_studies_management.demo_user_professional"/>
+        </record>
+
+        <record id="demo_professional_2" model="study.professional">
+            <field name="name">Alberto Navarro</field>
+            <field name="email">alberto.navarro@example.com</field>
+            <field name="phone">+34 669242804</field>
+            <field name="years_experience">12</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_bipolar'), ref('clinical_studies_management.speciality_depression')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_3" model="study.professional">
+            <field name="name">Sandra Ramos</field>
+            <field name="email">sandra.ramos@example.com</field>
+            <field name="phone">+34 657037906</field>
+            <field name="years_experience">6</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_eating'), ref('clinical_studies_management.speciality_sexual')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_4" model="study.professional">
+            <field name="name">Pedro López</field>
+            <field name="email">pedro.lópez@example.com</field>
+            <field name="phone">+34 680798618</field>
+            <field name="years_experience">3</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_geriatric'), ref('clinical_studies_management.speciality_family')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_5" model="study.professional">
+            <field name="name">Beatriz Blanco</field>
+            <field name="email">beatriz.blanco@example.com</field>
+            <field name="phone">+34 655498557</field>
+            <field name="years_experience">15</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_sexual'), ref('clinical_studies_management.speciality_eating'), ref('clinical_studies_management.speciality_bipolar')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_6" model="study.professional">
+            <field name="name">Carlos Morales</field>
+            <field name="email">carlos.morales@example.com</field>
+            <field name="phone">+34 670467739</field>
+            <field name="years_experience">5</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_depression')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_7" model="study.professional">
+            <field name="name">David Torres</field>
+            <field name="email">david.torres@example.com</field>
+            <field name="phone">+34 607541452</field>
+            <field name="years_experience">8</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_ptsd'), ref('clinical_studies_management.speciality_eating')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_8" model="study.professional">
+            <field name="name">Elena Díaz</field>
+            <field name="email">elena.díaz@example.com</field>
+            <field name="phone">+34 638249389</field>
+            <field name="years_experience">12</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_psychosomatic'), ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_ptsd'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_geriatric')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_9" model="study.professional">
+            <field name="name">Lucía Cruz</field>
+            <field name="email">lucía.cruz@example.com</field>
+            <field name="phone">+34 669620594</field>
+            <field name="years_experience">11</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_ocd'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_psychosomatic'), ref('clinical_studies_management.speciality_family')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_10" model="study.professional">
+            <field name="name">Cristina Serrano</field>
+            <field name="email">cristina.serrano@example.com</field>
+            <field name="phone">+34 638710748</field>
+            <field name="years_experience">6</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_family'), ref('clinical_studies_management.speciality_child')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_11" model="study.professional">
+            <field name="name">Silvia López</field>
+            <field name="email">silvia.lópez@example.com</field>
+            <field name="phone">+34 656797756</field>
+            <field name="years_experience">5</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_bipolar')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_12" model="study.professional">
+            <field name="name">Pedro Martínez</field>
+            <field name="email">pedro.martínez@example.com</field>
+            <field name="phone">+34 660437974</field>
+            <field name="years_experience">13</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_depression'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_grief'), ref('clinical_studies_management.speciality_child'), ref('clinical_studies_management.speciality_bipolar')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_13" model="study.professional">
+            <field name="name">María Morales</field>
+            <field name="email">maría.morales@example.com</field>
+            <field name="phone">+34 624292788</field>
+            <field name="years_experience">2</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_bipolar'), ref('clinical_studies_management.speciality_grief')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_14" model="study.professional">
+            <field name="name">Marta Navarro</field>
+            <field name="email">marta.navarro@example.com</field>
+            <field name="phone">+34 674834377</field>
+            <field name="years_experience">7</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_geriatric'), ref('clinical_studies_management.speciality_ocd')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_15" model="study.professional">
+            <field name="name">Carlos Jiménez</field>
+            <field name="email">carlos.jiménez@example.com</field>
+            <field name="phone">+34 629361505</field>
+            <field name="years_experience">9</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_psychosomatic'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_bipolar'), ref('clinical_studies_management.speciality_eating'), ref('clinical_studies_management.speciality_anxiety')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_16" model="study.professional">
+            <field name="name">Carlos Delgado</field>
+            <field name="email">carlos.delgado@example.com</field>
+            <field name="phone">+34 676191372</field>
+            <field name="years_experience">9</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_eating'), ref('clinical_studies_management.speciality_psychosomatic')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_17" model="study.professional">
+            <field name="name">Patricia Morales</field>
+            <field name="email">patricia.morales@example.com</field>
+            <field name="phone">+34 691481903</field>
+            <field name="years_experience">9</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_ocd'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_family'), ref('clinical_studies_management.speciality_geriatric'), ref('clinical_studies_management.speciality_grief')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_18" model="study.professional">
+            <field name="name">Sandra García</field>
+            <field name="email">sandra.garcía@example.com</field>
+            <field name="phone">+34 693758944</field>
+            <field name="years_experience">10</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_family'), ref('clinical_studies_management.speciality_bipolar'), ref('clinical_studies_management.speciality_psychosomatic')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_19" model="study.professional">
+            <field name="name">María Ortiz</field>
+            <field name="email">maría.ortiz@example.com</field>
+            <field name="phone">+34 639636460</field>
+            <field name="years_experience">14</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_child'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_ptsd')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_20" model="study.professional">
+            <field name="name">Carmen Herrera</field>
+            <field name="email">carmen.herrera@example.com</field>
+            <field name="phone">+34 644163706</field>
+            <field name="years_experience">10</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_grief'), ref('clinical_studies_management.speciality_anxiety')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_21" model="study.professional">
+            <field name="name">Marta Flores</field>
+            <field name="email">marta.flores@example.com</field>
+            <field name="phone">+34 682114077</field>
+            <field name="years_experience">9</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_ptsd'), ref('clinical_studies_management.speciality_sexual'), ref('clinical_studies_management.speciality_schizophrenia')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_22" model="study.professional">
+            <field name="name">Fernando Delgado</field>
+            <field name="email">fernando.delgado@example.com</field>
+            <field name="phone">+34 679524521</field>
+            <field name="years_experience">8</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_eating'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_ocd'), ref('clinical_studies_management.speciality_ptsd')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_23" model="study.professional">
+            <field name="name">David Blanco</field>
+            <field name="email">david.blanco@example.com</field>
+            <field name="phone">+34 611347347</field>
+            <field name="years_experience">10</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_schizophrenia'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_personality')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_24" model="study.professional">
+            <field name="name">Lucía Fernández</field>
+            <field name="email">lucía.fernández@example.com</field>
+            <field name="phone">+34 668702336</field>
+            <field name="years_experience">4</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_ocd'), ref('clinical_studies_management.speciality_addiction')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_25" model="study.professional">
+            <field name="name">David Delgado</field>
+            <field name="email">david.delgado@example.com</field>
+            <field name="phone">+34 608926523</field>
+            <field name="years_experience">4</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_grief'), ref('clinical_studies_management.speciality_family')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_26" model="study.professional">
+            <field name="name">Diego Ruiz</field>
+            <field name="email">diego.ruiz@example.com</field>
+            <field name="phone">+34 601303181</field>
+            <field name="years_experience">4</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_anxiety'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_sexual'), ref('clinical_studies_management.speciality_personality')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_27" model="study.professional">
+            <field name="name">Miguel Torres</field>
+            <field name="email">miguel.torres@example.com</field>
+            <field name="phone">+34 662735403</field>
+            <field name="years_experience">8</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_sexual'), ref('clinical_studies_management.speciality_psychosomatic'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_grief')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_28" model="study.professional">
+            <field name="name">Cristina Ruiz</field>
+            <field name="email">cristina.ruiz@example.com</field>
+            <field name="phone">+34 682101578</field>
+            <field name="years_experience">5</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_geriatric'), ref('clinical_studies_management.speciality_depression'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_ptsd'), ref('clinical_studies_management.speciality_ocd')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_29" model="study.professional">
+            <field name="name">Juan Serrano</field>
+            <field name="email">juan.serrano@example.com</field>
+            <field name="phone">+34 634269594</field>
+            <field name="years_experience">7</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_family'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_geriatric')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_professional_30" model="study.professional">
+            <field name="name">Rosa Flores</field>
+            <field name="email">rosa.flores@example.com</field>
+            <field name="phone">+34 614488566</field>
+            <field name="years_experience">3</field>
+            <field name="speciality_ids" eval="[(6,0, [ref('clinical_studies_management.speciality_anxiety'), ref('clinical_studies_management.speciality_addiction'), ref('clinical_studies_management.speciality_geriatric'), ref('clinical_studies_management.speciality_personality'), ref('clinical_studies_management.speciality_ptsd')])]"/>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_participant_1" model="study.participant">
+            <field name="name">Beatriz</field>
+            <field name="surname">Medina</field>
+            <field name="email">beatriz.medina_0@example.com</field>
+            <field name="phone">+34 625443724</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_2" model="study.participant">
+            <field name="name">María</field>
+            <field name="surname">Martínez</field>
+            <field name="email">maría.martínez_1@example.com</field>
+            <field name="phone">+34 643076048</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_3" model="study.participant">
+            <field name="name">Cristina</field>
+            <field name="surname">Serrano</field>
+            <field name="email">cristina.serrano_2@example.com</field>
+            <field name="phone">+34 641437272</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_4" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Torres</field>
+            <field name="email">david.torres_3@example.com</field>
+            <field name="phone">+34 610426537</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_5" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Martínez</field>
+            <field name="email">pablo.martínez_4@example.com</field>
+            <field name="phone">+34 655662632</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_6" model="study.participant">
+            <field name="name">Miguel</field>
+            <field name="surname">Pérez</field>
+            <field name="email">miguel.pérez_5@example.com</field>
+            <field name="phone">+34 615081646</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_7" model="study.participant">
+            <field name="name">Isabel</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">isabel.rodríguez_6@example.com</field>
+            <field name="phone">+34 659370681</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_8" model="study.participant">
+            <field name="name">Pedro</field>
+            <field name="surname">Flores</field>
+            <field name="email">pedro.flores_7@example.com</field>
+            <field name="phone">+34 644583306</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_9" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">marta.ruiz_8@example.com</field>
+            <field name="phone">+34 619705437</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_10" model="study.participant">
+            <field name="name">Patricia</field>
+            <field name="surname">Torres</field>
+            <field name="email">patricia.torres_9@example.com</field>
+            <field name="phone">+34 676366506</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_11" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Fernández</field>
+            <field name="email">carlos.fernández_10@example.com</field>
+            <field name="phone">+34 668661371</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_12" model="study.participant">
+            <field name="name">María</field>
+            <field name="surname">Serrano</field>
+            <field name="email">maría.serrano_11@example.com</field>
+            <field name="phone">+34 617392603</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_13" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Moreno</field>
+            <field name="email">elena.moreno_12@example.com</field>
+            <field name="phone">+34 617919169</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_14" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Flores</field>
+            <field name="email">diego.flores_13@example.com</field>
+            <field name="phone">+34 603631199</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_15" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">Ramos</field>
+            <field name="email">sandra.ramos_14@example.com</field>
+            <field name="phone">+34 642186040</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_16" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">López</field>
+            <field name="email">ana.lópez_15@example.com</field>
+            <field name="phone">+34 610959983</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_17" model="study.participant">
+            <field name="name">Jorge</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">jorge.ruiz_16@example.com</field>
+            <field name="phone">+34 685176750</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_18" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Navarro</field>
+            <field name="email">david.navarro_17@example.com</field>
+            <field name="phone">+34 613912373</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_19" model="study.participant">
+            <field name="name">Pedro</field>
+            <field name="surname">Díaz</field>
+            <field name="email">pedro.díaz_18@example.com</field>
+            <field name="phone">+34 612595207</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_20" model="study.participant">
+            <field name="name">Laura</field>
+            <field name="surname">González</field>
+            <field name="email">laura.gonzález_19@example.com</field>
+            <field name="phone">+34 631659473</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_21" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">Fernández</field>
+            <field name="email">sandra.fernández_20@example.com</field>
+            <field name="phone">+34 660303850</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_22" model="study.participant">
+            <field name="name">Raúl</field>
+            <field name="surname">Romero</field>
+            <field name="email">raúl.romero_21@example.com</field>
+            <field name="phone">+34 611940306</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_23" model="study.participant">
+            <field name="name">María</field>
+            <field name="surname">García</field>
+            <field name="email">maría.garcía_22@example.com</field>
+            <field name="phone">+34 667636849</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_24" model="study.participant">
+            <field name="name">Juan</field>
+            <field name="surname">Castro</field>
+            <field name="email">juan.castro_23@example.com</field>
+            <field name="phone">+34 623767429</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_25" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Ortiz</field>
+            <field name="email">josé.ortiz_24@example.com</field>
+            <field name="phone">+34 609059368</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_26" model="study.participant">
+            <field name="name">Rosa</field>
+            <field name="surname">Jiménez</field>
+            <field name="email">rosa.jiménez_25@example.com</field>
+            <field name="phone">+34 610815434</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_27" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Lara</field>
+            <field name="email">elena.lara_26@example.com</field>
+            <field name="phone">+34 653436732</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_28" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">González</field>
+            <field name="email">diego.gonzález_27@example.com</field>
+            <field name="phone">+34 633982073</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_29" model="study.participant">
+            <field name="name">Juan</field>
+            <field name="surname">Martínez</field>
+            <field name="email">juan.martínez_28@example.com</field>
+            <field name="phone">+34 612170308</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_30" model="study.participant">
+            <field name="name">Patricia</field>
+            <field name="surname">Lara</field>
+            <field name="email">patricia.lara_29@example.com</field>
+            <field name="phone">+34 673766803</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_31" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">González</field>
+            <field name="email">ana.gonzález_30@example.com</field>
+            <field name="phone">+34 640702874</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_32" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">Morales</field>
+            <field name="email">sandra.morales_31@example.com</field>
+            <field name="phone">+34 630492168</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_33" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Martínez</field>
+            <field name="email">david.martínez_32@example.com</field>
+            <field name="phone">+34 669181003</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_34" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">González</field>
+            <field name="email">david.gonzález_33@example.com</field>
+            <field name="phone">+34 601309376</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_35" model="study.participant">
+            <field name="name">Lucía</field>
+            <field name="surname">Herrera</field>
+            <field name="email">lucía.herrera_34@example.com</field>
+            <field name="phone">+34 615158345</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_36" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Díaz</field>
+            <field name="email">alberto.díaz_35@example.com</field>
+            <field name="phone">+34 648172102</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_37" model="study.participant">
+            <field name="name">Jorge</field>
+            <field name="surname">Vázquez</field>
+            <field name="email">jorge.vázquez_36@example.com</field>
+            <field name="phone">+34 675784097</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_38" model="study.participant">
+            <field name="name">Pedro</field>
+            <field name="surname">Lara</field>
+            <field name="email">pedro.lara_37@example.com</field>
+            <field name="phone">+34 603697102</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_39" model="study.participant">
+            <field name="name">Beatriz</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">beatriz.rodríguez_38@example.com</field>
+            <field name="phone">+34 633605274</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_40" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Flores</field>
+            <field name="email">pablo.flores_39@example.com</field>
+            <field name="phone">+34 666515008</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_41" model="study.participant">
+            <field name="name">Beatriz</field>
+            <field name="surname">Pérez</field>
+            <field name="email">beatriz.pérez_40@example.com</field>
+            <field name="phone">+34 622143572</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_42" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Ortiz</field>
+            <field name="email">elena.ortiz_41@example.com</field>
+            <field name="phone">+34 634046135</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_43" model="study.participant">
+            <field name="name">Laura</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">laura.ruiz_42@example.com</field>
+            <field name="phone">+34 663841746</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_44" model="study.participant">
+            <field name="name">María</field>
+            <field name="surname">Castro</field>
+            <field name="email">maría.castro_43@example.com</field>
+            <field name="phone">+34 661333549</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_45" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Medina</field>
+            <field name="email">elena.medina_44@example.com</field>
+            <field name="phone">+34 679682075</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_46" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Navarro</field>
+            <field name="email">david.navarro_45@example.com</field>
+            <field name="phone">+34 665564384</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_47" model="study.participant">
+            <field name="name">Cristina</field>
+            <field name="surname">Cruz</field>
+            <field name="email">cristina.cruz_46@example.com</field>
+            <field name="phone">+34 630024298</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_48" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Ramos</field>
+            <field name="email">diego.ramos_47@example.com</field>
+            <field name="phone">+34 617335341</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_49" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Ramos</field>
+            <field name="email">carlos.ramos_48@example.com</field>
+            <field name="phone">+34 637799849</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_50" model="study.participant">
+            <field name="name">Laura</field>
+            <field name="surname">Díaz</field>
+            <field name="email">laura.díaz_49@example.com</field>
+            <field name="phone">+34 661606748</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_51" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Torres</field>
+            <field name="email">alberto.torres_50@example.com</field>
+            <field name="phone">+34 635834346</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_52" model="study.participant">
+            <field name="name">Isabel</field>
+            <field name="surname">Medina</field>
+            <field name="email">isabel.medina_51@example.com</field>
+            <field name="phone">+34 660828225</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_53" model="study.participant">
+            <field name="name">Francisco</field>
+            <field name="surname">Castro</field>
+            <field name="email">francisco.castro_52@example.com</field>
+            <field name="phone">+34 639485015</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_54" model="study.participant">
+            <field name="name">Miguel</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">miguel.rodríguez_53@example.com</field>
+            <field name="phone">+34 617022628</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_55" model="study.participant">
+            <field name="name">Francisco</field>
+            <field name="surname">Pérez</field>
+            <field name="email">francisco.pérez_54@example.com</field>
+            <field name="phone">+34 677448816</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_56" model="study.participant">
+            <field name="name">Miguel</field>
+            <field name="surname">Medina</field>
+            <field name="email">miguel.medina_55@example.com</field>
+            <field name="phone">+34 670818628</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_57" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Castro</field>
+            <field name="email">david.castro_56@example.com</field>
+            <field name="phone">+34 678356236</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_58" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Romero</field>
+            <field name="email">carlos.romero_57@example.com</field>
+            <field name="phone">+34 679271865</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_59" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">García</field>
+            <field name="email">diego.garcía_58@example.com</field>
+            <field name="phone">+34 672867376</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_60" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Castro</field>
+            <field name="email">antonio.castro_59@example.com</field>
+            <field name="phone">+34 630762447</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_61" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Moreno</field>
+            <field name="email">diego.moreno_60@example.com</field>
+            <field name="phone">+34 691005160</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_62" model="study.participant">
+            <field name="name">Silvia</field>
+            <field name="surname">Fernández</field>
+            <field name="email">silvia.fernández_61@example.com</field>
+            <field name="phone">+34 632818017</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_63" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Medina</field>
+            <field name="email">elena.medina_62@example.com</field>
+            <field name="phone">+34 629683759</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_64" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Blanco</field>
+            <field name="email">pablo.blanco_63@example.com</field>
+            <field name="phone">+34 609306041</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_65" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Jiménez</field>
+            <field name="email">antonio.jiménez_64@example.com</field>
+            <field name="phone">+34 634375778</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_66" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Castro</field>
+            <field name="email">antonio.castro_65@example.com</field>
+            <field name="phone">+34 654544658</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_67" model="study.participant">
+            <field name="name">Silvia</field>
+            <field name="surname">Jiménez</field>
+            <field name="email">silvia.jiménez_66@example.com</field>
+            <field name="phone">+34 646181831</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_68" model="study.participant">
+            <field name="name">Carmen</field>
+            <field name="surname">Ramos</field>
+            <field name="email">carmen.ramos_67@example.com</field>
+            <field name="phone">+34 629358945</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_69" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Ramos</field>
+            <field name="email">ana.ramos_68@example.com</field>
+            <field name="phone">+34 611902129</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_70" model="study.participant">
+            <field name="name">Silvia</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">silvia.ruiz_69@example.com</field>
+            <field name="phone">+34 620652900</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_71" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Martínez</field>
+            <field name="email">carlos.martínez_70@example.com</field>
+            <field name="phone">+34 610050230</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_72" model="study.participant">
+            <field name="name">Cristina</field>
+            <field name="surname">Delgado</field>
+            <field name="email">cristina.delgado_71@example.com</field>
+            <field name="phone">+34 604462815</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_73" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Delgado</field>
+            <field name="email">josé.delgado_72@example.com</field>
+            <field name="phone">+34 655740419</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_74" model="study.participant">
+            <field name="name">David</field>
+            <field name="surname">Morales</field>
+            <field name="email">david.morales_73@example.com</field>
+            <field name="phone">+34 600443372</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_75" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">Sánchez</field>
+            <field name="email">elena.sánchez_74@example.com</field>
+            <field name="phone">+34 674261621</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_76" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Díaz</field>
+            <field name="email">diego.díaz_75@example.com</field>
+            <field name="phone">+34 641951683</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_77" model="study.participant">
+            <field name="name">Beatriz</field>
+            <field name="surname">Lara</field>
+            <field name="email">beatriz.lara_76@example.com</field>
+            <field name="phone">+34 688602597</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_78" model="study.participant">
+            <field name="name">Francisco</field>
+            <field name="surname">Vázquez</field>
+            <field name="email">francisco.vázquez_77@example.com</field>
+            <field name="phone">+34 658674442</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_79" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">López</field>
+            <field name="email">marta.lópez_78@example.com</field>
+            <field name="phone">+34 676506302</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_80" model="study.participant">
+            <field name="name">Francisco</field>
+            <field name="surname">Medina</field>
+            <field name="email">francisco.medina_79@example.com</field>
+            <field name="phone">+34 610049946</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_81" model="study.participant">
+            <field name="name">Silvia</field>
+            <field name="surname">Ramos</field>
+            <field name="email">silvia.ramos_80@example.com</field>
+            <field name="phone">+34 631840376</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_82" model="study.participant">
+            <field name="name">Miguel</field>
+            <field name="surname">Suárez</field>
+            <field name="email">miguel.suárez_81@example.com</field>
+            <field name="phone">+34 619810174</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_83" model="study.participant">
+            <field name="name">Elena</field>
+            <field name="surname">López</field>
+            <field name="email">elena.lópez_82@example.com</field>
+            <field name="phone">+34 688436007</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_84" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">alberto.rodríguez_83@example.com</field>
+            <field name="phone">+34 694802473</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_85" model="study.participant">
+            <field name="name">Juan</field>
+            <field name="surname">Herrera</field>
+            <field name="email">juan.herrera_84@example.com</field>
+            <field name="phone">+34 697062819</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_86" model="study.participant">
+            <field name="name">Cristina</field>
+            <field name="surname">Blanco</field>
+            <field name="email">cristina.blanco_85@example.com</field>
+            <field name="phone">+34 683852037</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_87" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Castro</field>
+            <field name="email">antonio.castro_86@example.com</field>
+            <field name="phone">+34 640471864</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_88" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Blanco</field>
+            <field name="email">ana.blanco_87@example.com</field>
+            <field name="phone">+34 625546325</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_89" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Flores</field>
+            <field name="email">alberto.flores_88@example.com</field>
+            <field name="phone">+34 629160727</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_90" model="study.participant">
+            <field name="name">Juan</field>
+            <field name="surname">Morales</field>
+            <field name="email">juan.morales_89@example.com</field>
+            <field name="phone">+34 642788712</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_91" model="study.participant">
+            <field name="name">Jorge</field>
+            <field name="surname">Cruz</field>
+            <field name="email">jorge.cruz_90@example.com</field>
+            <field name="phone">+34 645470475</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_92" model="study.participant">
+            <field name="name">Rosa</field>
+            <field name="surname">García</field>
+            <field name="email">rosa.garcía_91@example.com</field>
+            <field name="phone">+34 617298335</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_93" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Díaz</field>
+            <field name="email">josé.díaz_92@example.com</field>
+            <field name="phone">+34 604005980</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_94" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Medina</field>
+            <field name="email">ana.medina_93@example.com</field>
+            <field name="phone">+34 679310513</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_95" model="study.participant">
+            <field name="name">Fernando</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">fernando.rodríguez_94@example.com</field>
+            <field name="phone">+34 675907930</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_96" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Torres</field>
+            <field name="email">alberto.torres_95@example.com</field>
+            <field name="phone">+34 663845660</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_97" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Romero</field>
+            <field name="email">carlos.romero_96@example.com</field>
+            <field name="phone">+34 642524698</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_98" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Cruz</field>
+            <field name="email">ana.cruz_97@example.com</field>
+            <field name="phone">+34 619784309</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_99" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Martínez</field>
+            <field name="email">josé.martínez_98@example.com</field>
+            <field name="phone">+34 647745114</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_100" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Cruz</field>
+            <field name="email">pablo.cruz_99@example.com</field>
+            <field name="phone">+34 639766737</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_101" model="study.participant">
+            <field name="name">María</field>
+            <field name="surname">Rodríguez</field>
+            <field name="email">maría.rodríguez_100@example.com</field>
+            <field name="phone">+34 637750991</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_102" model="study.participant">
+            <field name="name">Raúl</field>
+            <field name="surname">Ramos</field>
+            <field name="email">raúl.ramos_101@example.com</field>
+            <field name="phone">+34 688994045</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_103" model="study.participant">
+            <field name="name">Raúl</field>
+            <field name="surname">Díaz</field>
+            <field name="email">raúl.díaz_102@example.com</field>
+            <field name="phone">+34 642132088</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_104" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Sánchez</field>
+            <field name="email">carlos.sánchez_103@example.com</field>
+            <field name="phone">+34 617159026</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_105" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">marta.ruiz_104@example.com</field>
+            <field name="phone">+34 618974993</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_106" model="study.participant">
+            <field name="name">Carmen</field>
+            <field name="surname">Sánchez</field>
+            <field name="email">carmen.sánchez_105@example.com</field>
+            <field name="phone">+34 607021507</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_107" model="study.participant">
+            <field name="name">Carlos</field>
+            <field name="surname">Vázquez</field>
+            <field name="email">carlos.vázquez_106@example.com</field>
+            <field name="phone">+34 673025370</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_108" model="study.participant">
+            <field name="name">Rosa</field>
+            <field name="surname">González</field>
+            <field name="email">rosa.gonzález_107@example.com</field>
+            <field name="phone">+34 653784936</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_109" model="study.participant">
+            <field name="name">Fernando</field>
+            <field name="surname">Flores</field>
+            <field name="email">fernando.flores_108@example.com</field>
+            <field name="phone">+34 635522069</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_110" model="study.participant">
+            <field name="name">Juan</field>
+            <field name="surname">Lara</field>
+            <field name="email">juan.lara_109@example.com</field>
+            <field name="phone">+34 698878842</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_111" model="study.participant">
+            <field name="name">Cristina</field>
+            <field name="surname">Pérez</field>
+            <field name="email">cristina.pérez_110@example.com</field>
+            <field name="phone">+34 667507883</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_112" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Lara</field>
+            <field name="email">diego.lara_111@example.com</field>
+            <field name="phone">+34 684696778</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_113" model="study.participant">
+            <field name="name">Patricia</field>
+            <field name="surname">Navarro</field>
+            <field name="email">patricia.navarro_112@example.com</field>
+            <field name="phone">+34 662568996</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_114" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">Ramos</field>
+            <field name="email">marta.ramos_113@example.com</field>
+            <field name="phone">+34 656562766</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_115" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">marta.ruiz_114@example.com</field>
+            <field name="phone">+34 641394472</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_116" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">García</field>
+            <field name="email">antonio.garcía_115@example.com</field>
+            <field name="phone">+34 671291442</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_117" model="study.participant">
+            <field name="name">Javier</field>
+            <field name="surname">Navarro</field>
+            <field name="email">javier.navarro_116@example.com</field>
+            <field name="phone">+34 680818486</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_118" model="study.participant">
+            <field name="name">Carmen</field>
+            <field name="surname">Castro</field>
+            <field name="email">carmen.castro_117@example.com</field>
+            <field name="phone">+34 635327761</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_119" model="study.participant">
+            <field name="name">Rosa</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">rosa.ruiz_118@example.com</field>
+            <field name="phone">+34 645165662</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_120" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Jiménez</field>
+            <field name="email">antonio.jiménez_119@example.com</field>
+            <field name="phone">+34 619360459</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_121" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Herrera</field>
+            <field name="email">josé.herrera_120@example.com</field>
+            <field name="phone">+34 600702292</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_122" model="study.participant">
+            <field name="name">Lucía</field>
+            <field name="surname">Delgado</field>
+            <field name="email">lucía.delgado_121@example.com</field>
+            <field name="phone">+34 601979309</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_123" model="study.participant">
+            <field name="name">Lucía</field>
+            <field name="surname">Herrera</field>
+            <field name="email">lucía.herrera_122@example.com</field>
+            <field name="phone">+34 633003256</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_124" model="study.participant">
+            <field name="name">Miguel</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">miguel.ruiz_123@example.com</field>
+            <field name="phone">+34 692841812</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_125" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Fernández</field>
+            <field name="email">ana.fernández_124@example.com</field>
+            <field name="phone">+34 610927438</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_126" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">Serrano</field>
+            <field name="email">sandra.serrano_125@example.com</field>
+            <field name="phone">+34 657262601</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_127" model="study.participant">
+            <field name="name">Carmen</field>
+            <field name="surname">López</field>
+            <field name="email">carmen.lópez_126@example.com</field>
+            <field name="phone">+34 659005644</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_128" model="study.participant">
+            <field name="name">Carmen</field>
+            <field name="surname">Romero</field>
+            <field name="email">carmen.romero_127@example.com</field>
+            <field name="phone">+34 694874546</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_129" model="study.participant">
+            <field name="name">Lucía</field>
+            <field name="surname">Castro</field>
+            <field name="email">lucía.castro_128@example.com</field>
+            <field name="phone">+34 644644653</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_130" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">López</field>
+            <field name="email">sandra.lópez_129@example.com</field>
+            <field name="phone">+34 639358338</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_131" model="study.participant">
+            <field name="name">Laura</field>
+            <field name="surname">Castro</field>
+            <field name="email">laura.castro_130@example.com</field>
+            <field name="phone">+34 609563262</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_132" model="study.participant">
+            <field name="name">Francisco</field>
+            <field name="surname">Torres</field>
+            <field name="email">francisco.torres_131@example.com</field>
+            <field name="phone">+34 608030354</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_133" model="study.participant">
+            <field name="name">Alberto</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">alberto.ruiz_132@example.com</field>
+            <field name="phone">+34 630518049</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_134" model="study.participant">
+            <field name="name">Pedro</field>
+            <field name="surname">Castro</field>
+            <field name="email">pedro.castro_133@example.com</field>
+            <field name="phone">+34 609770625</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_135" model="study.participant">
+            <field name="name">Diego</field>
+            <field name="surname">Flores</field>
+            <field name="email">diego.flores_134@example.com</field>
+            <field name="phone">+34 644517669</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_136" model="study.participant">
+            <field name="name">Fernando</field>
+            <field name="surname">García</field>
+            <field name="email">fernando.garcía_135@example.com</field>
+            <field name="phone">+34 658402777</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_137" model="study.participant">
+            <field name="name">Beatriz</field>
+            <field name="surname">Fernández</field>
+            <field name="email">beatriz.fernández_136@example.com</field>
+            <field name="phone">+34 682343747</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_138" model="study.participant">
+            <field name="name">Ana</field>
+            <field name="surname">Ortiz</field>
+            <field name="email">ana.ortiz_137@example.com</field>
+            <field name="phone">+34 642014027</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_139" model="study.participant">
+            <field name="name">Fernando</field>
+            <field name="surname">Suárez</field>
+            <field name="email">fernando.suárez_138@example.com</field>
+            <field name="phone">+34 613149312</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_140" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Pérez</field>
+            <field name="email">pablo.pérez_139@example.com</field>
+            <field name="phone">+34 622478419</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_141" model="study.participant">
+            <field name="name">Javier</field>
+            <field name="surname">Medina</field>
+            <field name="email">javier.medina_140@example.com</field>
+            <field name="phone">+34 639791593</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_142" model="study.participant">
+            <field name="name">Jorge</field>
+            <field name="surname">Lara</field>
+            <field name="email">jorge.lara_141@example.com</field>
+            <field name="phone">+34 682909687</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_143" model="study.participant">
+            <field name="name">Fernando</field>
+            <field name="surname">Sánchez</field>
+            <field name="email">fernando.sánchez_142@example.com</field>
+            <field name="phone">+34 640389829</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_144" model="study.participant">
+            <field name="name">Jorge</field>
+            <field name="surname">Díaz</field>
+            <field name="email">jorge.díaz_143@example.com</field>
+            <field name="phone">+34 657520304</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_145" model="study.participant">
+            <field name="name">José</field>
+            <field name="surname">Ruiz</field>
+            <field name="email">josé.ruiz_144@example.com</field>
+            <field name="phone">+34 628575588</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_146" model="study.participant">
+            <field name="name">Patricia</field>
+            <field name="surname">Sánchez</field>
+            <field name="email">patricia.sánchez_145@example.com</field>
+            <field name="phone">+34 615070449</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_wednesday')])]"/>
+            <field name="preferred_schedule">1</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_147" model="study.participant">
+            <field name="name">Pablo</field>
+            <field name="surname">Lara</field>
+            <field name="email">pablo.lara_146@example.com</field>
+            <field name="phone">+34 683631818</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_148" model="study.participant">
+            <field name="name">Antonio</field>
+            <field name="surname">Navarro</field>
+            <field name="email">antonio.navarro_147@example.com</field>
+            <field name="phone">+34 638108573</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_monday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_149" model="study.participant">
+            <field name="name">Marta</field>
+            <field name="surname">Suárez</field>
+            <field name="email">marta.suárez_148@example.com</field>
+            <field name="phone">+34 681354727</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_tuesday'), ref('clinical_studies_management.available_day_thursday')])]"/>
+            <field name="preferred_schedule">3</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_participant_150" model="study.participant">
+            <field name="name">Sandra</field>
+            <field name="surname">Vázquez</field>
+            <field name="email">sandra.vázquez_149@example.com</field>
+            <field name="phone">+34 658630029</field>
+            <field name="available_days" eval="[(6,0, [ref('clinical_studies_management.available_day_monday'), ref('clinical_studies_management.available_day_friday'), ref('clinical_studies_management.available_day_wednesday'), ref('clinical_studies_management.available_day_tuesday')])]"/>
+            <field name="preferred_schedule">2</field>
+            <field name="state">draft</field>
+        </record>
+
+</data></odoo>

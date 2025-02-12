@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_bulk_assign_professionals" model="ir.actions.server">
+        <field name="name">Asignar Profesionales</field>
+        <field name="model_id" ref="model_study_participant"/>
+        <field name="binding_model_id" ref="model_study_participant"/>
+        <field name="state">code</field>
+        <field name="code">
+            records.action_bulk_assign_professionals()
+        </field>
+    </record>
+    <record id="action_bulk_assign_template" model="ir.actions.server">
+    <field name="name">Asignar a Plantilla</field>
+    <field name="model_id" ref="model_study_participant"/>
+    <field name="binding_model_id" ref="model_study_participant"/>
+    <field name="state">code</field>
+    <field name="code">
+        action = records.action_bulk_assign_template()
+    </field>
+</record>
+</odoo>

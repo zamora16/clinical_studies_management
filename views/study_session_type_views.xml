@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_study_session_type_form" model="ir.ui.view">
+        <field name="name">study.session.type.form</field>
+        <field name="model">study.session.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="duration" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_session_type_tree" model="ir.ui.view">
+        <field name="name">study.session.type.tree</field>
+        <field name="model">study.session.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="duration" widget="float_time"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_session_type_search" model="ir.ui.view">
+        <field name="name">study.session.type.search</field>
+        <field name="model">study.session.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_study_session_type" model="ir.actions.act_window">
+        <field name="name">Tipos de Sesión</field>
+        <field name="res_model">study.session.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea el primer tipo de sesión
+            </p>
+        </field>
+    </record>
+</odoo>

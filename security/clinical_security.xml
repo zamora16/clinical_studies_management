@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Categoría de seguridad -->
+        <record id="module_category_clinical" model="ir.module.category">
+            <field name="name">Estudios Clínicos</field>
+            <field name="description">Gestión de estudios clínicos</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Grupo de profesionales asociados -->
+        <record id="group_study_professional_associate" model="res.groups">
+            <field name="name">Profesional Asociado</field>
+            <field name="category_id" ref="module_category_clinical"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Acceso limitado a sus propios registros y participantes asignados.</field>
+        </record>
+
+        <!-- Grupo de gestores principales -->
+        <record id="group_study_professional_principal" model="res.groups">
+            <field name="name">Gestor Principal</field>
+            <field name="category_id" ref="module_category_clinical"/>
+            <field name="implied_ids" eval="[(4, ref('group_study_professional_associate'))]"/>
+            <field name="comment">Control total sobre plantillas y gestión de estudios.</field>
+        </record>
+
+        <!-- El superusuario heredará todos los permisos -->
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_study_professional_principal'))]"/>
+        </record>
+    </data>
+</odoo>

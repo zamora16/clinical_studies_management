@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_study_participant_form" model="ir.ui.view">
+        <field name="name">study.participant.form</field>
+        <field name="model">study.participant</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign_professional" 
+                            string="Asignar Profesional Automáticamente" 
+                            type="object" 
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('template_id', '=', False)]}"
+                            confirm="¿Desea asignar automáticamente un profesional compatible?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="surname"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="template_id"/>
+                        </group>
+                        <group>
+                            <field name="available_days" widget="many2many_tags"/>
+                            <field name="preferred_schedule"/>
+                            <field name="professional_id" 
+                                   options="{'no_create': True}" 
+                                   placeholder="(Sin asignar)"
+                                   domain="[('assignment_ids.template_id', '=', template_id), 
+                                           ('assignment_ids.state', '=', 'assigned')]"
+                                   context="{'default_template_id': template_id}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sesiones" name="sessions">
+                            <field name="session_ids"/>
+                        </page>
+                        <page string="Estadísticas" name="stats">
+                            <group>
+                                <field name="sessions_completed"/>
+                                <field name="sessions_pending"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_study_participant_tree" model="ir.ui.view">
+        <field name="name">study.participant.tree</field>
+        <field name="model">study.participant</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="template_id"/>
+                <field name="professional_id"/>
+                <field name="sessions_completed"/>
+                <field name="sessions_pending"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_study_participant_search" model="ir.ui.view">
+        <field name="name">study.participant.search</field>
+        <field name="model">study.participant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="template_id"/>
+                <field name="professional_id"/>
+                <separator/>
+                <filter string="Pendientes de Asignación" 
+                        name="pending" 
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Activos" 
+                        name="active" 
+                        domain="[('state', '=', 'active')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Estudio" name="template" context="{'group_by': 'template_id'}"/>
+                    <filter string="Profesional" name="professional" context="{'group_by': 'professional_id'}"/>
+                    <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_study_participant" model="ir.actions.act_window">
+        <field name="name">Participantes</field>
+        <field name="res_model">study.participant</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registra el primer participante
+            </p>
+        </field>
+    </record>
+</odoo>
