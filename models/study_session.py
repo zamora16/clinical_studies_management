@@ -2,6 +2,8 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
 
+import pytz
+
 class StudySession(models.Model):
     """
     Modelo para la gestión de sesiones clínicas.
@@ -146,23 +148,40 @@ class StudySession(models.Model):
     def _create_calendar_event(self):
         """
         Crea un evento de calendario para la sesión.
-        
-        Returns:
-            calendar.event: El evento de calendario creado
+        TODO: Lograr que los eventos en la vista calendario se asignen a su hora y no a "todo el día"
         """
         self.ensure_one()
-        
+
+        # Obtener la zona horaria del usuario
+        user_tz = self.env.user.tz or 'Europe/Madrid'  # Si no tiene zona horaria, usa 'Europe/Madrid' por defecto
+
+        # Obtener la zona horaria y convertir la hora de inicio
+        local_tz = pytz.timezone(user_tz)
         start_dt = datetime.combine(self.date, datetime.min.time()) + timedelta(hours=self.time_start)
-        stop_dt = start_dt + timedelta(hours=self.duration)
-        
+        start_local = local_tz.localize(start_dt)
+
+        # Convertir la hora de finalización de la misma manera
+        end_dt = start_local + timedelta(hours=self.duration)
+        end_local = end_dt
+
+        # Convertir las horas a formato ISO
+        start_str = start_local.isoformat()
+        stop_str = end_local.isoformat()
+
         event = self.env['calendar.event'].create({
             'name': self.name,
-            'start': start_dt,
-            'stop': stop_dt,
-            'duration': self.duration,
+            'start': start_str, 
+            'stop': stop_str,   
+            'allday': False,     
+            'start_date': start_local.date(),  
+            'stop_date': end_local.date(),
             'user_id': self.env.user.id,
-            'privacy': 'private'
+            'privacy': 'private',
+            'partner_ids': [(6, 0, [
+                self.professional_id.user_id.partner_id.id,
+                self.participant_id.id
+            ])]
         })
-        
+
         self.calendar_event_id = event
         return event
