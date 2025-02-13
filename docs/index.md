@@ -20,45 +20,51 @@ El sistema permitirá crear una plantilla con toda la configuración necesaria p
 
 - **Configuración básica**
     - Nombre y descripción del estudio
-    - Número de participantes requeridos
-    - Número de terapeutas requeridos
-    - Duración total estimada
+    - Número mínimo de participantes 
+    - Número mínimo de terapeutas
+    - Sesiones por semana
+    - Duración total estimada (calculada automáticamente)
 
 - **Configuración de Sesiones**
-    - Número total de sesiones
-    - Duración de cada sesión
-    - Intervalo mínimo entre sesiones
-    - Intervalo máximo entre sesiones
+    - Tipos de sesiones configurables
+    - Cantidad de sesiones por tipo
+    - Duración personalizada por tipo
 
 - **Requisitos de Personal**
-    - Especialidades esperadas (ej: depresión, ansiedad, adicciones)
+    - Especialidades requeridas (ej: depresión, ansiedad, adicciones)
     - Años de experiencia esperados
-    - Disponibilidad horaria requerida
+    - Disponibilidad horaria necesaria
 
 ### B. Asignación Automatizada de Profesionales a Plantillas
 - **Motor de Asignación de Profesionales**: Esta automatización permitirá obtener una puntuación de la afinidad de un terapeuta con respecto a un proyecto. Además, asignará a los terapeutas más adecuados en función de su perfil y de las características del estudio.
-    - Validación de especialidades requeridas
-    - Verificación de disponibilidad horaria
-    - Control de carga de trabajo actual
-    - Sistema de puntuación basado en:
-        - Coincidencia de especialidades
-        - Experiencia en el tipo de estudio
-        - Carga actual de trabajo
+    - Calcula puntuación de afinidad (0-100) basada en:
+        - Experiencia (40%): Ratio entre años de experiencia y requeridos
+        - Especialidades (40%): Porcentaje de coincidencia con las requeridas
+        - Carga de trabajo (20%): Penalización por número de participantes activos
+    - Asigna automáticamente a los N mejores profesionales que superen 60 puntos
+    - Permite confirmar o declinar asignaciones manualmente
 
-- **Motor de Asignación de Participantes**: cuando un participante es dado de alta en una plantilla de estudio, el motor busca el terapeuta con mayor afinidad teniendo en cuenta las preferencias horarias de ambos y la carga de trabajo actual del profesional.
-    - Matching con profesionales según:
-        - Preferencias horarias del participante
-        - Disponibilidad del profesional
-        - Carga actual del profesional
+- **Motor de Asignación de Participantes**: Permite automatizar la asignación de un profesional con un participante, considerando la afinidad entre las preferencias de calendario de ambos y la carga de trabajo actual del profesional.
+    - Calcula compatibilidad (0-100) basada en:
+        - Compatibilidad de días (40%): Días coincidentes entre agendas
+        - Franja horaria (30%): Coincidencia de preferencias horarias
+        - Carga profesional (30%): Número actual de participantes
+    - Asigna al profesional más compatible que supere 50 puntos
 
 ### C. Generación Automática de Calendario
-- **Planificador Inteligente**
-    - Generación de calendario respetando:
-        - Intervalos entre sesiones definidos
-        - Disponibilidad del profesional
-        - Disponibilidad del paciente
-    - Sistema de notificaciones de cambios
-    - Programación de recordatorios tanto a participante como a terapeuta
+- **Planificador Inteligente**: Permite generar las sesiones asociadas a un estudio para cada participante, además de añadirlas al calendario.
+    - Distribución automática de sesiones respetando:
+        - Número de sesiones por semana configurado
+        - Tipos de sesión requeridos
+        - Días disponibles comunes
+        - Franjas horarias compatibles
+        - Duración de cada tipo de sesión
+    - Integración con calendario Odoo
+    - Sistema de estados para gestión de sesiones:
+        - Programada
+        - Confirmada
+        - Completada
+        - Cancelada
 
 ## 4. Mapa del módulo
 El módulo permitirá gestionar plantillas, profesionales y participantes. La asignación de profesionales a una determinada plantilla se realizará de manera automática considerando datos del estudio y del profesional. El apartado de profesionales será de consulta, para comprobar el estado de cada uno de ellos y manejar cargas de trabajo. Por último, el apartado participantes permitirá crearlos con diferentes datos que también serán utilizados para la correcta asignación de profesionales y programación de sesiones.
@@ -176,3 +182,54 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
     - Gestión de participantes
         - Información de contacto
         - Preferencias horarias
+
+## 11. Instalación y Configuración
+
+- **Requisitos previos**
+    - Odoo 16.0 o superior
+    - Módulos base requeridos:
+        - mail
+        - calendar
+        - hr
+
+- **Proceso de instalación**
+    - 1. Clonar repositorio en la carpeta addons de Odoo:
+        - git clone https://github.com/yourusername/clinical_studies_management.git
+    - 2. Actualizar la lista de aplicaciones en Odoo:
+        - Activar modo desarrollador
+        - Ir a Aplicaciones > Actualizar lista de aplicaciones
+    - 3. Buscar e instalar "Clinical Studies Management"
+
+
+- **Configuración inicial**
+    - 1. Crear usuarios y asignar a los grupos correspondientes:
+        - Gestor Principal: acceso total
+        - Profesional Asociado: acceso limitado a sus registros
+    - 2. Datos maestros:
+        - Especialidades: El módulo incluye 15 especialidades predefinidas
+        - Tipos de sesión: 3 tipos base (evaluación inicial, terapia, seguimiento)
+        - Días disponibles: Configuración de días laborables
+    - 3. Datos de demo incluidos:
+        - 3 plantillas de estudio
+        - 30 profesionales con especialidades variadas
+        - 150 participantes de prueba
+        - Usuarios demo:
+            - Gestor: login: manager_demo / password: manager_demo
+            - Profesional: login: prof_demo / password: prof_demo
+
+- **Flujo de trabajo recomendado**
+   - 1. Crear nueva plantilla de estudio:
+        - Configurar requisitos básicos
+        - Definir tipos y cantidad de sesiones
+        - Especificar requisitos de personal
+    - 2. Asignar profesionales:
+        - Usar botón "Asignar Profesionales" para asignación automática
+        - Se debe confirmar la asignación manualmente
+    - 3. Registrar participantes:
+        - Crear participantes con sus preferencias horarias
+        - Usar acción masiva "Asignar plantilla" para seleccionar la template deseada
+        - Usar acción masiva "Asignar profesional" para matching automático
+    - 4. Generar calendario:
+        - Usar botón "Generar Sesiones" en la plantilla
+        - Verificar calendario generado
+        - Activar plantilla para confirmar todas las sesiones
