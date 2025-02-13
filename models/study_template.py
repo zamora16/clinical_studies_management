@@ -1,6 +1,9 @@
 from datetime import timedelta
+import logging
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 class StudyTemplate(models.Model):
     """
@@ -236,24 +239,65 @@ class StudyTemplate(models.Model):
 
     def _find_next_available_slot(self, participant, start_date, session_type):
         """
-        Encuentra el siguiente horario disponible compatible entre profesional y participante.
-        
-        Args:
-            participant: record de study.participant
-            start_date: fecha desde la que empezar a buscar
-            session_type: record de study.session.type
-            
-        Returns:
-            dict con 'date' y 'time' si encuentra un slot, None si no encuentra
+        Encuentra el siguiente horario disponible compatible entre profesional y participante,
+        respetando las restricciones de sesiones por semana y días entre sesiones.
         """
         common_days = self._get_common_available_days(participant)
-        available_slots = self._get_compatible_time_slots(participant)
+        _logger.info(f'Días comunes encontrados: {common_days.mapped("name")}')
         
-        return self._search_available_slot(
-            participant, start_date, session_type, 
-            common_days, available_slots
-        )
+        available_slots = self._get_compatible_time_slots(participant)
+        _logger.info(f'Slots horarios disponibles: {available_slots}')
+        
+        Session = self.env['study.session']
+        current_date = start_date
+        max_attempts = 120
 
+        _logger.info(f'Buscando slots desde {current_date}')
+        
+        for _ in range(max_attempts):
+            # Verificar si el día es compatible
+            if not self._is_compatible_day(current_date, common_days):
+                current_date += timedelta(days=1)
+                continue
+                
+            # Verificar restricciones semanales
+            week_sessions = Session.search([
+                ('participant_id', '=', participant.id),
+                ('date', '>=', current_date - timedelta(days=current_date.weekday())),
+                ('date', '<', current_date - timedelta(days=current_date.weekday()) + timedelta(days=7)),
+                ('state', 'not in', ['cancelled'])
+            ])
+            
+            # Verificar límite de sesiones por semana
+            if len(week_sessions) >= self.sessions_per_week:
+                # Avanzar al inicio de la siguiente semana
+                days_to_next_week = 7 - current_date.weekday()
+                current_date += timedelta(days=days_to_next_week)
+                continue
+                
+            # Verificar día de separación entre sesiones si hay más de una por semana
+            if self.sessions_per_week > 1 and week_sessions:
+                latest_session = max(week_sessions.mapped('date'))
+                if (current_date - latest_session).days <= 1:
+                    current_date += timedelta(days=1)
+                    continue
+            
+            # Verificar disponibilidad en el día actual
+            slot = self._check_day_availability(
+                participant, current_date, session_type,
+                available_slots, Session
+            )
+            
+            if slot:
+                _logger.info(f'Slot encontrado: {slot}')
+                return slot
+            else:
+                _logger.info(f'No hay slots disponibles para {current_date}')
+                current_date += timedelta(days=1)
+        
+        _logger.warning(f'No se encontró slot después de {max_attempts} intentos')
+        return None
+    
     def _get_common_available_days(self, participant):
         """Obtiene los días disponibles comunes entre profesional y participante."""
         prof_days = participant.professional_id.available_days
@@ -270,14 +314,20 @@ class StudyTemplate(models.Model):
     def _get_compatible_time_slots(self, participant):
         """Obtiene los horarios compatibles según preferencias."""
         schedule_map = {
-            '1': [8, 9, 10, 11, 12],  # Mañana
-            '2': [15, 16, 17, 18],    # Tarde
-            '3': [8, 9, 10, 11, 12, 15, 16, 17, 18]  # Ambos
+            '1': [8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0],     # Mañana
+            '2': [15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0], # Tarde
+            '3': [8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0,      # Ambos
+                15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0]
         }
         
         prof_slots = schedule_map.get(participant.professional_id.preferred_schedule, [])
         part_slots = schedule_map.get(participant.preferred_schedule, [])
         available_slots = list(set(prof_slots) & set(part_slots))
+        available_slots.sort()  # Ordenamos los slots para empezar por las primeras horas
+        
+        _logger.info(f'Slots prof: {prof_slots}')
+        _logger.info(f'Slots part: {part_slots}')
+        _logger.info(f'Slots comunes: {available_slots}')
         
         if not available_slots:
             raise ValidationError(
@@ -306,26 +356,21 @@ class StudyTemplate(models.Model):
 
     def _is_compatible_day(self, date, common_days):
         """Verifica si una fecha es compatible según los días disponibles."""
-        return any(d.code == str(date.weekday() + 1) for d in common_days)
+        weekday = str(date.weekday() + 1)  # Convertimos a string para comparar con el code
+        is_compatible = any(d.code == weekday for d in common_days)
+        _logger.info(f'Verificando día {date}: weekday={weekday}, compatible={is_compatible}')
+        return is_compatible
 
-    def _check_day_availability(self, participant, current_date, session_type,
-                            available_slots, Session):
-        """Verifica disponibilidad en un día específico y busca slots libres."""
-        week_sessions = self._get_week_sessions(participant, current_date, Session)
-        
-        if len(week_sessions) >= self.sessions_per_week:
-            return None
-            
-        if self._has_session_today(week_sessions, current_date):
-            return None
-            
-        if not self._can_add_session_type(participant, session_type, Session):
-            return None
-            
-        return self._find_free_slot(
-            participant, current_date, session_type,
-            available_slots, Session
-        )
+    def _check_day_availability(self, participant, current_date, session_type, available_slots, Session):
+        """Verifica la disponibilidad en un día específico y busca slots libres."""
+        for slot in available_slots:
+            if not self._has_conflicts(participant, current_date, slot, session_type, Session):
+                return {
+                    'date': current_date,
+                    'time': slot
+                }
+            _logger.info(f'Slot {slot}:00 no disponible: conflicto para {participant.name} el {current_date}')
+        return None
 
     def _get_week_sessions(self, participant, current_date, Session):
         """Obtiene las sesiones de la semana actual."""
@@ -374,19 +419,56 @@ class StudyTemplate(models.Model):
         return None
 
     def _has_conflicts(self, participant, date, time_slot, session_type, Session):
-        """Verifica si hay conflictos para un slot específico."""
-        return bool(Session.search_count([
-            '|',
+        """
+        Verifica si hay conflictos para un slot específico.
+        """
+        def format_time(decimal_time):
+            """Convierte hora decimal a formato HH:MM"""
+            hours = int(decimal_time)
+            minutes = int((decimal_time % 1) * 60)
+            return f"{hours:02d}:{minutes:02d}"
+
+        # Verificar conflictos del profesional
+        professional_sessions = Session.search([
             ('professional_id', '=', participant.professional_id.id),
+            ('date', '=', date),
+            ('state', 'not in', ['cancelled'])
+        ])
+        
+        for session in professional_sessions:
+            # Verificar solapamiento teniendo en cuenta medias horas
+            session_end = session.time_start + session.duration
+            new_session_end = time_slot + session_type.duration
+            
+            # Añadir un margen de 15 minutos entre sesiones
+            if (time_slot < session_end + 0.25 and new_session_end + 0.25 > session.time_start):
+                _logger.debug(
+                    f'Conflicto profesional: {participant.professional_id.name} '
+                    f'tiene sesión de {format_time(session.time_start)} a {format_time(session_end)} '
+                    f'el {date}'
+                )
+                return True
+        
+        # Verificar conflictos del participante 
+        participant_sessions = Session.search([
             ('participant_id', '=', participant.id),
             ('date', '=', date),
-            ('state', 'not in', ['cancelled', 'rescheduled']),
-            '|',
-                '&', ('time_start', '<=', time_slot),
-                    ('time_end', '>', time_slot),
-                '&', ('time_start', '<', time_slot + session_type.duration),
-                    ('time_end', '>=', time_slot + session_type.duration)
-        ]))
+            ('state', 'not in', ['cancelled'])
+        ])
+        
+        for session in participant_sessions:
+            # Verificar que haya al menos 30 minutos entre sesiones
+            session_end = session.time_start + session.duration
+            new_session_end = time_slot + session_type.duration
+            
+            if (time_slot < session_end + 0.5 and new_session_end + 0.5 > session.time_start):
+                _logger.debug(
+                    f'Conflicto participante: {participant.name} tiene sesión de '
+                    f'{format_time(session.time_start)} a {format_time(session_end)} el {date}'
+                )
+                return True
+        
+        return False
 
     def action_generate_sessions(self):
         """Genera las sesiones para todos los participantes."""
