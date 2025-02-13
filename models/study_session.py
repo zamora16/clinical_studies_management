@@ -1,8 +1,11 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
+import logging
 
 import pytz
+
+_logger = logging.getLogger(__name__)
 
 class StudySession(models.Model):
     """
@@ -146,42 +149,58 @@ class StudySession(models.Model):
         events_to_delete.unlink()
 
     def _create_calendar_event(self):
-        """
-        Crea un evento de calendario para la sesión.
-        TODO: Lograr que los eventos en la vista calendario se asignen a su hora y no a "todo el día"
-        """
+        """Crea un evento de calendario para la sesión."""
         self.ensure_one()
 
-        # Obtener la zona horaria del usuario
-        user_tz = self.env.user.tz or 'Europe/Madrid'  # Si no tiene zona horaria, usa 'Europe/Madrid' por defecto
+        try:
+            # Obtener zona horaria
+            user_tz = pytz.timezone(self.env.user.tz or 'UTC')
+            
+            # Crear datetime de inicio
+            start_hours = int(self.time_start)
+            start_minutes = int((self.time_start % 1) * 60)
+            start_dt = datetime.combine(
+                self.date,
+                datetime.min.time().replace(hour=start_hours, minute=start_minutes)
+            )
+            
+            # Localizar y convertir a UTC
+            start_local = user_tz.localize(start_dt)
+            start_utc = start_local.astimezone(pytz.UTC)
+            
+            # Calcular fecha fin
+            duration_hours = int(self.duration)
+            duration_minutes = int((self.duration % 1) * 60)
+            end_utc = start_utc + timedelta(hours=duration_hours, minutes=duration_minutes)
 
-        # Obtener la zona horaria y convertir la hora de inicio
-        local_tz = pytz.timezone(user_tz)
-        start_dt = datetime.combine(self.date, datetime.min.time()) + timedelta(hours=self.time_start)
-        start_local = local_tz.localize(start_dt)
+            # Obtener partners válidos
+            partner_ids = []
+            if self.professional_id.user_id.partner_id:
+                partner_ids.append(self.professional_id.user_id.partner_id.id)
+            if self.participant_id.partner_id:
+                partner_ids.append(self.participant_id.partner_id.id)
 
-        # Convertir la hora de finalización de la misma manera
-        end_dt = start_local + timedelta(hours=self.duration)
-        end_local = end_dt
+            if not partner_ids:
+                raise ValidationError("No se encontraron partners válidos para crear el evento")
 
-        # Convertir las horas a formato ISO
-        start_str = start_local.isoformat()
-        stop_str = end_local.isoformat()
+            # Crear el evento
+            event = self.env['calendar.event'].sudo().create({
+                'name': self.name,
+                'start_date': False,  # Forzar que no sea todo el día
+                'stop_date': False,
+                'start': start_utc.strftime('%Y-%m-%d %H:%M:%S'),
+                'stop': end_utc.strftime('%Y-%m-%d %H:%M:%S'),
+                'allday': False,
+                'user_id': self.env.user.id,
+                'privacy': 'private',
+                'partner_ids': [(6, 0, partner_ids)]
+            })
 
-        event = self.env['calendar.event'].create({
-            'name': self.name,
-            'start': start_str, 
-            'stop': stop_str,   
-            'allday': False,     
-            'start_date': start_local.date(),  
-            'stop_date': end_local.date(),
-            'user_id': self.env.user.id,
-            'privacy': 'private',
-            'partner_ids': [(6, 0, [
-                self.professional_id.user_id.partner_id.id,
-                self.participant_id.id
-            ])]
-        })
-
-        self.calendar_event_id = event
-        return event
+            self.calendar_event_id = event
+            return event
+            
+        except Exception as e:
+            _logger.error(f"Error al crear evento de calendario: {str(e)}")
+            raise ValidationError(
+                f"No se pudo crear el evento de calendario: {str(e)}"
+            )

@@ -159,12 +159,22 @@ def generate_demo_xml():
         apellido = random.choice(apellidos)
         email = f"{nombre.lower()}.{apellido.lower()}_{i}@example.com"
         
+        # Primero creamos el partner
+        print(f'''
+        <record id="demo_participant_partner_{i+1}" model="res.partner">
+            <field name="name">{nombre} {apellido}</field>
+            <field name="email">{email}</field>
+            <field name="phone">+34 {random.randint(600000000, 699999999)}</field>
+            <field name="type">other</field>
+        </record>''')
+        
         available_days = random.sample(['1', '2', '3', '4', '5'], random.randint(2, 4))
         days_refs = ", ".join([
             f"ref('clinical_studies_management.available_day_{['monday', 'tuesday', 'wednesday', 'thursday', 'friday'][int(day)-1]}')" 
             for day in available_days
         ])
 
+        # Luego creamos el participante vinculado al partner
         print(f'''
         <record id="demo_participant_{i+1}" model="study.participant">
             <field name="name">{nombre}</field>
@@ -174,6 +184,7 @@ def generate_demo_xml():
             <field name="available_days" eval="[(6,0, [{days_refs}])]"/>
             <field name="preferred_schedule">{random.choice(['1', '2', '3'])}</field>
             <field name="state">draft</field>
+            <field name="partner_id" ref="demo_participant_partner_{i+1}"/>
         </record>''')
 
     print('\n</data></odoo>')

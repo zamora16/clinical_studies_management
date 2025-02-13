@@ -97,6 +97,32 @@ class StudyParticipant(models.Model):
             "- Activo: Participando activamente en el estudio\n"
             "- Completado: Ha finalizado todas las sesiones del estudio"
     )
+
+
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Partner asociado',
+        required=True,
+        ondelete='cascade',
+        auto_join=True,
+    )
+
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Crear partner automáticamente si no existe"""
+        Partner = self.env['res.partner']
+        for vals in vals_list:
+            if not vals.get('partner_id'):
+                partner = Partner.create({
+                    'name': f"{vals.get('name', '')} {vals.get('surname', '')}",
+                    'email': vals.get('email'),
+                    'phone': vals.get('phone'),
+                    'type': 'other',
+                })
+                vals['partner_id'] = partner.id
+        return super().create(vals_list)
+
     @api.depends('session_ids.state')
     def _compute_sessions_stats(self):
         for record in self:
