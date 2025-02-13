@@ -1,5 +1,5 @@
 ---
-title: Clinical Studies Managemeent
+title: Clinical Studies Management
 layout: page
 show_sidebar: false
 hero_height: is-fullwidth
@@ -113,50 +113,14 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
 
 ## 8. Diagramas de flujo
 
-- **Flujo de Asignación de Profesionales a Plantilla de Estudio**: Este flujo se activa manualmente una vez se ha configurado la plantilla de un nuevo estudio. Se basa en los requisitos especificados para calcular una puntuación para cada profesional. La fórmula es la siguiente, dando puntuaciones entre 0-10.
-
-    - Coincidencia de especialidades (40%)
-        - Puntuación = (especialidades coincidentes / Total especialidades esperadas) x 40
-    - Años de experiencia (30%)
-        - Puntuación = (años experiencia / años experiencia esperados) x 30
-    - Carga actual de trabajo (30%)
-        - Puntuación basada en participantes actuales:
-            - 0-2: 30
-            - 3-4: 25
-            - 5-6: 20
-            - 7-8: 10
-            - 9: 5
-            - 10: 0
-
-    En caso de que no haya los suficientes para cumplir el mínimo, se notifica y se da la posibilidad de modificar la configuración de la plantilla antes de volver a realizar la asignación automática.
+- **Flujo de Asignación de Profesionales a Plantilla de Estudio**: Este flujo se activa manualmente una vez se ha configurado la plantilla de un nuevo estudio. Se basa en los requisitos especificados para calcular una puntuación para cada profesional. La fórmula es la siguiente, dando puntuaciones entre 0-100.
 
     ![Asignación profesional-plantilla](assets/images/profesionalPlantilla.jpg)
 
-- **Flujo de Asignación de Participante**: comienza automáticamente cuando un participante es asignado a un estudio activo. Registra la información necesaria para poderle asignar el profesional más adecuado. La puntuación se calcula basándose en:
-
-    - Compatibilidad de horarios (70%)
-        - Días de la semana (40 puntos):
-            - Coinciden 3 o más: 40
-            - Coinciden 2: 25
-            - Coincide 1: 10
-            - Sin coincidencia: 0
-        - Franja horaria preferida (30 puntos):
-            - Coincidencia total: 30
-            - Coincidencia parcial: 15
-            - Sin coincidencia: 0
-
-    - Carga actual del profesional (30%)
-        - Participantes actuales:
-            - 0-2: 30
-            - 3-4: 25
-            - 5-6: 20
-            - 7-8: 10
-            - 9: 5
-            - 10: 0
-
+- **Flujo de Asignación de Participante**: se activa manualmente para uno o más participantes y calcula la puntuación de afinidad profesional-participante para asignar al mejor calificado, en una escala del 0 al 100.
     ![Asignación participante-profesional](assets/images/participanteProfesional.jpg)
 
-- **Flujo de Generación de Calendario**: se inicia de manera automática cuando un participante se asocia a un terapeuta. Obtiene la configuración de sesiones de la plantilla del estudio y distribuye la intervención para que cumpla con las preferencias del participante y el horario del terapeuta.
+- **Flujo de Generación de Calendario**: se activa manualmente una vez el estudio cuenta con las sesiones configuradas, los profesionales y participantes mínimos y su asignación. Genera automáticamente la distribución de todas las sesiones del estudio y los añade al calendario como eventos.
 
     ![Generación calendario](assets/images/calendario.jpg)
 
@@ -194,7 +158,7 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
 
 - **Proceso de instalación**
     - 1. Clonar repositorio en la carpeta addons de Odoo:
-        - git clone https://github.com/yourusername/clinical_studies_management.git
+        ```git clone https://github.com/zamora16/clinical_studies_management.git```
     - 2. Actualizar la lista de aplicaciones en Odoo:
         - Activar modo desarrollador
         - Ir a Aplicaciones > Actualizar lista de aplicaciones
