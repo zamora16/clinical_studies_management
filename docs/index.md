@@ -157,23 +157,24 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
         - hr
 
 - **Proceso de instalación**
-    - 1. Clonar repositorio en la carpeta addons de Odoo:
-        ```git clone https://github.com/zamora16/clinical_studies_management.git```
-    - 2. Actualizar la lista de aplicaciones en Odoo:
+    1. Clonar repositorio en la carpeta addons de Odoo:
+        ```
+        git clone https://github.com/zamora16/clinical_studies_management.git
+        ```
+    2. Actualizar la lista de aplicaciones en Odoo:
         - Activar modo desarrollador
         - Ir a Aplicaciones > Actualizar lista de aplicaciones
-    - 3. Buscar e instalar "Clinical Studies Management"
-
+    3. Buscar e instalar "Clinical Studies Management"
 
 - **Configuración inicial**
-    - 1. Crear usuarios y asignar a los grupos correspondientes:
+    1. Crear usuarios y asignar a los grupos correspondientes:
         - Gestor Principal: acceso total
         - Profesional Asociado: acceso limitado a sus registros
-    - 2. Datos maestros:
+    2. Datos maestros:
         - Especialidades: El módulo incluye 15 especialidades predefinidas
         - Tipos de sesión: 3 tipos base (evaluación inicial, terapia, seguimiento)
         - Días disponibles: Configuración de días laborables
-    - 3. Datos de demo incluidos:
+    3. Datos de demo incluidos:
         - 3 plantillas de estudio
         - 30 profesionales con especialidades variadas
         - 150 participantes de prueba
@@ -182,18 +183,18 @@ El módulo requerirá el desarrollo de las siguientes pantallas para permitir la
             - Profesional: login: prof_demo / password: prof_demo
 
 - **Flujo de trabajo recomendado**
-   - 1. Crear nueva plantilla de estudio:
+    1. Crear nueva plantilla de estudio:
         - Configurar requisitos básicos
         - Definir tipos y cantidad de sesiones
         - Especificar requisitos de personal
-    - 2. Asignar profesionales:
+    2. Asignar profesionales:
         - Usar botón "Asignar Profesionales" para asignación automática
         - Se debe confirmar la asignación manualmente
-    - 3. Registrar participantes:
+    3. Registrar participantes:
         - Crear participantes con sus preferencias horarias
         - Usar acción masiva "Asignar plantilla" para seleccionar la template deseada
         - Usar acción masiva "Asignar profesional" para matching automático
-    - 4. Generar calendario:
+    4. Generar calendario:
         - Usar botón "Generar Sesiones" en la plantilla
         - Verificar calendario generado
         - Activar plantilla para confirmar todas las sesiones
