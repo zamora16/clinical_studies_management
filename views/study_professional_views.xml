@@ -87,7 +87,7 @@
         <field name="name">study.professional.graph</field>
         <field name="model">study.professional</field>
         <field name="arch" type="xml">
-            <graph sample="1">
+            <graph>
                 <field name="experience_level"/>
                 <field name="participant_count" type="measure"/>
             </graph>

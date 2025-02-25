@@ -11,12 +11,13 @@ class ProfessionalReport(models.AbstractModel):
         if docids:
             professionals = self.env['study.professional'].browse(docids)
             data = data or {}
-        # Si no, los obtenemos de data
+        # Si no, los obtenemos del diccionario
         elif data and data.get('ids'):
             professionals = self.env['study.professional'].browse(data['ids'])
         else:
             professionals = self.env['study.professional']
         
+        # Obtener opciones del reporte
         report_options = data.get('form', {}) if data else {}
         
         return {
@@ -28,6 +29,7 @@ class ProfessionalReport(models.AbstractModel):
         }
         
     def _get_schedule_name(self, code):
+        """Convertir código de horario a nombre"""
         schedule_names = {
             '1': 'Mañana',
             '2': 'Tarde',
