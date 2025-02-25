@@ -29,6 +29,10 @@
         # Acciones
         'actions/actions.xml',
         
+        # Reportes
+        'views/professional_report_wizard_view.xml',
+        'reports/professional_report.xml',
+
         # Vistas
         'views/study_session_type_views.xml',
         'views/study_template_views.xml',

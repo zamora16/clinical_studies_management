@@ -13,7 +13,6 @@ class StudySession(models.Model):
     """
     _name = 'study.session'
     _description = 'Clinical Study Session'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'date, time_start'
 
     # Campos básicos

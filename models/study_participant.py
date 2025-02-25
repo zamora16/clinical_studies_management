@@ -10,7 +10,6 @@ class StudyParticipant(models.Model):
     """
     _name = 'study.participant'
     _description = 'Participante de Estudio'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.model
     def _valid_field_parameter(self, field, name):

@@ -7,7 +7,6 @@ class StudyProfessionalAssignment(models.Model):
     """
     _name = 'study.professional.assignment'
     _description = 'Clinical Study Professional Assignment'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     # Campos relacionales
     template_id = fields.Many2one(

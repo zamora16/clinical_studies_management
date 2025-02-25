@@ -11,14 +11,13 @@ class AssignTemplateWizard(models.TransientModel):
     )
 
     def action_assign_template(self):
-        context = dict(self._context or {})
-        active_ids = context.get('active_ids', [])
-        participants = self.env['study.participant'].browse(active_ids)
+        participants = self.env['study.participant'].search([
+            ('id', 'in', self._context.get('active_ids', []))
+        ])
         
-        for participant in participants:
-            participant.write({
-                'template_id': self.template_id.id,
-                'state': 'draft'
-            })
+        participants.write({
+            'template_id': self.template_id.id,
+            'state': 'draft'
+        })
             
         return {'type': 'ir.actions.act_window_close'}

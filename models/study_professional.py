@@ -6,7 +6,6 @@ class StudyProfessional(models.Model):
     """
     _name = 'study.professional'
     _description = 'Profesional de Estudio'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.model
     def _valid_field_parameter(self, field, name):
@@ -95,6 +94,7 @@ class StudyProfessional(models.Model):
             "No incluye participantes de estudios completados o en borrador."
     )
 
+
     # Campos computados
     participant_count = fields.Integer(
         compute='_compute_participant_count',
@@ -182,3 +182,22 @@ class StudyProfessional(models.Model):
         elif active_cases <= 8:
             return 5.0
         return 0.0
+    
+
+    # Vista graph
+    # Campo para clasificar por experiencia
+    experience_level = fields.Selection([
+        ('junior', 'Junior (0-3 años)'),
+        ('mid', 'Mid-level (4-7 años)'),
+        ('senior', 'Senior (8+ años)')
+    ], string='Nivel de Experiencia', compute='_compute_experience_level', store=True)
+
+    @api.depends('years_experience')
+    def _compute_experience_level(self):
+        for record in self:
+            if record.years_experience < 4:
+                record.experience_level = 'junior'
+            elif record.years_experience < 8:
+                record.experience_level = 'mid'
+            else:
+                record.experience_level = 'senior'

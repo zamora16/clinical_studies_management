@@ -41,10 +41,6 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_ids"/>
-                    <field name="activity_ids"/>
-                </div>
             </form>
         </field>
     </record>
@@ -86,11 +82,22 @@
         </field>
     </record>
 
-    <!-- Action -->
+    <!-- Graph View -->
+    <record id="view_study_professional_graph" model="ir.ui.view">
+        <field name="name">study.professional.graph</field>
+        <field name="model">study.professional</field>
+        <field name="arch" type="xml">
+            <graph sample="1">
+                <field name="experience_level"/>
+                <field name="participant_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
     <record id="action_study_professional" model="ir.actions.act_window">
         <field name="name">Profesionales</field>
         <field name="res_model">study.professional</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Registra el primer profesional

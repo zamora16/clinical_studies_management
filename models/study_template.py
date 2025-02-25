@@ -11,7 +11,6 @@ class StudyTemplate(models.Model):
     """
     _name = 'study.template'
     _description = 'Clinical Study Template'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     # Campos básicos
     name = fields.Char(required=True, tracking=True)

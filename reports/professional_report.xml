@@ -1,0 +1,179 @@
+<odoo>
+    <!-- Action para abrir el wizard -->
+    <record id="action_report_professional_wizard" model="ir.actions.act_window">
+        <field name="name">Ficha de Profesional</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">professional.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_study_professional"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Action para el reporte PDF -->
+    <record id="action_report_professional_print" model="ir.actions.report">
+        <field name="name">Imprimir Ficha de Profesional</field>
+        <field name="model">study.professional</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinical_studies_management.professional_report_document</field>
+        <field name="report_file">clinical_studies_management.professional_report_document</field>
+        <field name="print_report_name">'Ficha_Profesional'</field>
+    </record>
+    <!--  Report Template  -->
+    <template id="professional_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="professionals" t-as="prof">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center mb-4">Ficha de Profesional</h2>
+                        <!--  Información Personal  -->
+                        <t t-if="options.get('include_personal_info')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Información Personal</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="30%">
+                                                <strong>Nombre:</strong>
+                                            </td>
+                                            <td>
+                                                <t t-esc="prof.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Email:</strong>
+                                            </td>
+                                            <td>
+                                                <t t-esc="prof.email" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Teléfono:</strong>
+                                            </td>
+                                            <td>
+                                                <t t-esc="prof.phone" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                        <!--  Especialidades  -->
+                        <t t-if="options.get('include_specialities')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Especialidades</h4>
+                                    <ul>
+                                        <t t-foreach="prof.speciality_ids" t-as="spec">
+                                            <li>
+                                                <t t-esc="spec.name" />
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <!--  Experiencia  -->
+                        <t t-if="options.get('include_experience')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Experiencia</h4>
+                                    <p>
+                                        <strong>Años de experiencia:</strong>
+                                        <t t-esc="prof.years_experience" />
+                                    </p>
+                                </div>
+                            </div>
+                        </t>
+                        <!--  Disponibilidad  -->
+                        <t t-if="options.get('include_availability')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Disponibilidad</h4>
+                                    <p>
+                                        <strong>Horario preferido:</strong>
+                                        <t t-esc="get_schedule_name(prof.preferred_schedule)" />
+                                    </p>
+                                    <p>
+                                        <strong>Días disponibles:</strong>
+                                    </p>
+                                    <ul>
+                                        <t t-foreach="prof.available_days" t-as="day">
+                                            <li>
+                                                <t t-esc="day.name" />
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <!--  Estadísticas  -->
+                        <t t-if="options.get('include_statistics')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Estadísticas</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Participantes activos:</strong>
+                                            </td>
+                                            <td>
+                                                <t t-esc="prof.participant_count" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Estudios asignados:</strong>
+                                            </td>
+                                            <td>
+                                                <t t-esc="prof.study_count" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                        <!--  Participantes  -->
+                        <t t-if="options.get('include_participants')">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4>Participantes Activos</h4>
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Estudio</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="prof.active_participant_ids"
+                                                t-as="participant">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="participant.name" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="participant.template_id.name" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="participant.state" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <t t-if="not prof_last">
+                    <p style="page-break-after: always;" />
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
